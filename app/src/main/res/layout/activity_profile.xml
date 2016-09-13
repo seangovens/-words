@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TableRow
+        android:layout_marginTop="20dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pen Name:"
+        android:layout_marginLeft="40dp"
+        android:id="@+id/penNameText"
+        android:layout_column="0"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="1"
+        android:layout_alignRight="@+id/penNameText"/>
+
+        <Button
+            android:text="Commit"
+            android:layout_marginLeft="25dp"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp">
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_span="4"
+            android:background="#000000" />
+    </TableRow>
+
+    <TableRow>
+        <Button
+            android:text="Pending Stories"
+            android:layout_column="0"/>
+        <Button
+            android:text="Contributions"
+            android:layout_column="1"/>
+        <Button
+            android:text="Achievements"
+            android:layout_column="2"/>
+    </TableRow>
+
+</TableLayout>
