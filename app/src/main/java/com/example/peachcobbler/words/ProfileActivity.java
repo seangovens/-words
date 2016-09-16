@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 public class ProfileActivity extends Activity {
 
     private String user;
+    private int storyCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +58,8 @@ public class ProfileActivity extends Activity {
         sCount.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                int count = (int) dataSnapshot.getValue();
+                long count = (long) dataSnapshot.getValue();
+                storyCount = (int) count;
                 ((TextView) findViewById(R.id.storyCounter)).setText("Stories Remaining: " + String.valueOf(count));
                 if (count == 0) {
                     ((Button) findViewById(R.id.createStoryButton)).setEnabled(false);
@@ -83,5 +85,15 @@ public class ProfileActivity extends Activity {
         ConfirmNameFragment cnFrag = new ConfirmNameFragment();
         cnFrag.setArguments(bundle);
         cnFrag.show(getFragmentManager(), "cnFrag");
+    }
+
+    public void createStory(View view) {
+        storyCount--;
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        db.getReference("users/" + user + "/storyCount").setValue(new Integer(storyCount));
+
+        Intent intent = new Intent(this, StoryOptionsActivity.class);
+        intent.putExtra("user", user);
+        startActivity(intent);
     }
 }
