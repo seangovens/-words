@@ -38,6 +38,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -201,7 +202,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 if (!task.isSuccessful()) {
                                     Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_LONG).show();
                                     showProgress(false);
-                                    startProfile();
+                                }
+                                else {
+                                    showProgress(false);
+                                    String user = task.getResult().getUser().getUid();
+                                    writeProfile(user);
+                                    startProfile(user);
                                 }
                             }
                         });
@@ -209,7 +215,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     else {
                         // START NEW ACTIVITY
                         Log.d("SUCCESS", "Login task succeeded");
-                        startProfile();
+                        showProgress(false);
+                        startProfile(task.getResult().getUser().getUid());
                     }
                 }
             });
@@ -219,8 +226,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    private void startProfile() {
+    private void writeProfile(String user) {
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        db.getReference("users/" + user + "/penName").setValue("");
+        db.getReference("users/" + user + "/storyCount").setValue(new Integer(5));
+    }
+
+    private void startProfile(String user) {
         Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra("user", user);
         startActivity(intent);
     }
 
