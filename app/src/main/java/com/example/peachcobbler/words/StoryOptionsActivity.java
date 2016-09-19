@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class StoryOptionsActivity extends AppCompatActivity {
 
@@ -61,7 +65,12 @@ public class StoryOptionsActivity extends AppCompatActivity {
     }
 
     public void createStory(View view) {
-        // NEED TO ADD STORY IN DATABASE
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference story = db.getReference("stories").push();
+        story.child("title").setValue(((EditText) findViewById(R.id.titleText)).getText().toString());
+        story.child("wordCount").setValue(new Integer(wordCount));
+        story.child("wordMax").setValue(new Integer(wordMax));
+
         Intent intent = new Intent(this, StoryActivity.class);
         intent.putExtra("user", user);
         startActivity(intent);

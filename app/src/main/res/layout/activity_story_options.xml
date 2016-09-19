@@ -14,7 +14,8 @@
                 android:text="Title:"/>
             <EditText
                 android:hint="New Title"
-                android:maxLength="25"/>
+                android:maxLength="25"
+                android:id="@+id/titleText"/>
     </TableRow>
 
     <TableRow
@@ -66,12 +67,12 @@
         <Button
             android:text="Cancel"
             android:layout_column="0"
-            android:onClick="createStory"/>
+            android:onClick="cancel"/>
 
         <Button
             android:text="Create Story"
             android:layout_column="1"
-            android:onClick="cancel"/>
+            android:onClick="createStory"/>
     </TableRow>
 
 </TableLayout>
